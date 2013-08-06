@@ -9,8 +9,8 @@ return array(
 		'path' => 'app/views',
 	),
 	'db' => array(
-		'dsn' => 'mysql:host=localhost;dbname=todophp',
-		'username' => 'root',
-		'password' => '',
+		'dsn' => 'sqlite:app/database/todos.sqlite',
+		'username' => null,
+		'password' => null,
 	),
 );

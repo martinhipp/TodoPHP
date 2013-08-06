@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
+error_reporting(-1);
 
 require_once 'app/framework.php';
 require_once 'app/models.php';

@@ -3,45 +3,40 @@
 get('/', function()
 {
 	$data['todos'] = getTodos();
+	$data['completed'] = countCompletedTodos();
 
-	render('index', $data);
+	echo render('todos', $data);
 });
 
 post('/add', function()
 {
 	$title = trim(from($_POST, 'title'));
-	$id = addTodo($title);
+	$id = newTodo($title);
 
-	return to(url('/'));
+	$success = ! empty($id);
+
+	echo json(compact('success', 'id'));
 });
 
-post('/complete', function()
+post('/toggle', function()
 {
 	$id = from($_POST, 'id');
+	$success = toggleTodo($id);
 
-	if ($id !== null)
-	{
-		completeTodo($id);
-	}
-
-	return to(url('/'));
+	echo json(compact('success'));
 });
 
 post('/remove', function()
 {
 	$id = from($_POST, 'id');
+	$success = removeTodo($id);
 
-	if ($id !== null)
-	{
-		removeTodo($id);
-	}
-
-	return to(url('/'));
+	echo json(compact('success'));
 });
 
-get('/reset', function()
+get('/clear', function()
 {
-	resetTodos();
+	$success = removeCompletedTodos();
 
-	return to(url('/'));
+	echo json(compact('success'));
 });

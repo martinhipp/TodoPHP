@@ -39,7 +39,7 @@ body {
 	}
 }
 
-#todo input {
+#title {
 	display: block;
 	width: 100%;
 	padding: 10px;
@@ -58,7 +58,7 @@ body {
 
 #todo-list {
 	list-style: none;
-	margin: 10px 0;
+	margin: 20px 0 0;
 	padding: 0;
 
 	li {
@@ -70,26 +70,32 @@ body {
 			border: 0;
 		}
 
-		&.done label {
+		&.completed label {
 			color: #999;
 			text-decoration: line-through;
 		}
 
-		input[type="checkbox"] {
+		.toggle {
 			margin-right: 5px;
 		}
 
-		.remove {
-			background: url(../img/remove.png) no-repeat;
+		.edit {
+			border: 0;
 			display: none;
-			width: 20px;
-			height: 20px;
+		}
+
+		.remove {
+			display: none;
 			position: absolute;
-			top: 10px;
+			top: 0;
 			right: 0;
+			font-size: 20px;
+			font-weight: bold;
+			color: #ccc;
+			cursor: pointer;
 
 			&:hover {
-				background-position: 0 -20px;
+				color: #666;
 			}
 		}
 
@@ -99,9 +105,10 @@ body {
 	}
 }
 
-#reset {
+#clear-completed {
 	background-color: #ccc;
 	display: block;
+	margin: 20px 0 0;
 	padding: 5px 10px;
 	font-weight: bold;
 	color: #fff;

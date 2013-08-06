@@ -93,7 +93,7 @@ function html($string, $charset = 'UTF-8', $flags = ENT_QUOTES)
 
 function render($file, $data = null)
 {
-	if (is_array($data) && count($data))
+	if (is_array($data))
 	{
 		extract($data, EXTR_SKIP);
 	}
@@ -106,7 +106,7 @@ function render($file, $data = null)
 	{
 		ob_start();
   		include $path;
-		echo ob_get_clean();
+		return ob_get_clean();
 	}
 	else
 	{
@@ -179,7 +179,7 @@ function insertId()
 	return db()->lastInsertId();
 }
 
-function numNows($query)
+function rowCount($query)
 {
 	return $query->rowCount();
 }
@@ -209,14 +209,14 @@ function url($uri = null, $index = true)
 {
 	$url = sprintf('%s/%s', trim(config('site.url'), '/'), $index ? trim(config('site.index'), '/') : null);
 
-	return sprintf('%s/%s', trim($url, '/'), trim($uri, '/'));
+	return trim(sprintf('%s/%s', trim($url, '/'), trim($uri, '/')), '/');
 }
 
-function to($url = null, $code = 302)
+function redirect($url = null, $code = 302)
 {
 	if (empty($url))
 	{
-		$url = uri();
+		$url = url();
 	}
 
 	if (is_array($url))

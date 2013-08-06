@@ -5,25 +5,38 @@ The todo app for my Summer of Tech 2013 Intro to PHP bootcamp.
 ### Requirements
 
 * PHP 5.3+
-	* PDO (MySQL)
+	* PDO (MySQL or SQLite)
 * MySQL 5.2+
 
 ### Schema
 
+#### MySQL
+
 ```mysql
 CREATE TABLE `todos` (
-	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`title` varchar(50) DEFAULT NULL,
-	`completed_at` datetime DEFAULT NULL,
+	`completed` int(11) NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
+#### SQLite
+```sqlite
+CREATE TABLE todos (
+	id integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	title varchar(50),
+	completed integer NOT NULL DEFAULT(0)
+);
+```
+
 ### Install
 
-1. Create a MySQL database and execute the SQL statement above.
+1. Create a MySQL or SQLite database and execute the appropriate SQL query above.
 2. Edit the config values in `app/config.php`. If you do not have mod_rewrite enabled, uncomment the `index` value.
 3. Navigate your browser to your TodoPHP install.
+
+**Note:** For SQLite to work properly, the database directory needs to be writable by the server.
 
 ### License
 Copyright (C) 2013 Martin Hipp

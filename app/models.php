@@ -1,5 +1,13 @@
 <?php
 
+function getTodo($id)
+{
+	$sql = 'SELECT * FROM todos WHERE id = ?';
+	$query = query($sql, array($id));
+
+	return row($query);
+}
+
 function getTodos()
 {
 	$sql = 'SELECT * FROM todos';
@@ -8,30 +16,42 @@ function getTodos()
 	return result($query);
 }
 
-function addTodo($title)
+function newTodo($title)
 {
 	$sql = 'INSERT INTO todos (title) VALUES (?)';
+	$query = query($sql, array($title));
 
-	return query($sql, array($title)) ? insertId() : false;
+	return $query ? insertId() : false;
 }
 
-function completeTodo($id)
+function toggleTodo($id)
 {
-	$sql = 'UPDATE todos SET completed_at = ? WHERE id = ?';
+	$sql = 'UPDATE todos SET completed = completed != 1 WHERE id = ?';
+	$query = query($sql, array($id));
 
-	return query($sql, array(date('Y-m-d H:i:s'), $id));
+	return rowCount($query) > 0;
 }
 
 function removeTodo($id)
 {
 	$sql = 'DELETE FROM todos WHERE id = ?';
+	$query = query($sql, array($id));
 
-	return query($sql, array($id));
+	return rowCount($query) > 0;
 }
 
-function resetTodos()
+function removeCompletedTodos()
 {
-	$sql = 'DELETE FROM todos';
+	$sql = 'DELETE FROM todos WHERE completed = ?';
+	$query = query($sql, array(true));
 
-	return query($sql);
+	return rowCount($query);
+}
+
+function countCompletedTodos()
+{
+	$sql = 'SELECT COUNT(*) AS total FROM todos WHERE completed = ?';
+	$query = query($sql, array(true));
+
+	return row($query)->total;
 }
